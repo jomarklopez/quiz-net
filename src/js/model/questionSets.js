@@ -10,28 +10,27 @@ export default class QuestionSets {
         answerKey = removeEmptyLines(answerKey.value.split(/\n/));
         quizName = quizName.value;
 
-
+        let choices = createChoices(answerKey);
         const qset = {
             quizName: quizName,
             id: uniqid(),
             questions: questions,
             answerKey: answerKey,
-            choices: createChoices(answerKey)
+            choices: choices
         }
 
         this.qsets.push(qset);
         console.log(qset);
-
         return qset;
-    }
+    };
 
     deleteQuestionSet(id) {
         const index = this.qsets.findIndex(el => {
             el.id === id;
         })
         this.qsets.splice(index, 1);
-    }
-}
+    };
+};
 
 function removeEmptyLines(array) {
     for (let index = 0; index < array.length;) {
@@ -45,6 +44,26 @@ function removeEmptyLines(array) {
     return array;
 }
 
-function createChoices(answerKey, answer) {
+function createChoices(answerKey) {
+    const choices = [];
 
+    for (let index = 0; index < answerKey.length; index++) {
+        const element = answerKey[index];
+        choices.push([...answerKey])
+    };
+
+    /* TODO SHUFFLE CHOICES USING FISHER-YATES SHUFFLE THEN REMOVE ELEMENTS */
+
+    //Randomly remove elements until 3 are left except the right answer
+    for (var i = 0; i <= choices.length - 1; i++) {
+        let el = choices[i];
+        while (el.length !== 3) {
+            let curIndex = Math.floor(Math.random() * el.length)
+            if (el[curIndex] !== answerKey[i]) {
+                el.splice(curIndex, 1);
+            }
+        }
+    };
+
+    return choices;
 }

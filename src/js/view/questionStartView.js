@@ -7,7 +7,7 @@ export const renderQuiz = (quiz) => {
     const markup = `
     <div class="displayQuestions">
             <div class="questionNumber-container">
-                <h2>Question ${curQuestionNum} of 5</h2>    
+                <h2>Question ${curQuestionNum} of ${TheQuiz.questions.length}</h2>    
             </div>
         
             <div class="question-container">
@@ -19,15 +19,15 @@ export const renderQuiz = (quiz) => {
                 <ul>
                     <li>
                         <input id="choice1" type="radio" name="radios" value="all">
-                        <label for="choice1">Posterior/Dorsal Column</label>
+                        <label for="choice1">${quiz.choices[curQuestionNum - 1][0]}</label>
                     </li>
                     <li>
                         <input id="choice2" type="radio" name="radios" value="all">
-                        <label for="choice2">Spinal cord</label>
+                        <label for="choice2">${quiz.choices[curQuestionNum - 1][1]}</label>
                     </li>
                     <li>
                         <input id="choice3" type="radio" name="radios" value="all">
-                        <label for="choice3">Denticulate ligament</label>
+                        <label for="choice3">${quiz.choices[curQuestionNum - 1][2]}</label>
                     </li>
                 </ul>
             </div> 
@@ -40,15 +40,19 @@ export const renderQuiz = (quiz) => {
 };
 
 export const prevQuestion = () => {
-    clearQuiz();
-    curQuestionNum--
-    renderQuiz(TheQuiz);
+    if (curQuestionNum !== 1) {
+        clearQuiz();
+        curQuestionNum--
+        renderQuiz(TheQuiz);
+    }
 }
 
 export const nextQuestion = () => {
-    clearQuiz();
-    curQuestionNum++;
-    renderQuiz(TheQuiz);
+    if (curQuestionNum !== TheQuiz.questions.length) {
+        clearQuiz();
+        curQuestionNum++;
+        renderQuiz(TheQuiz);
+    }
 }
 
 export const clearQuiz = () => {

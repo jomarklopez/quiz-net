@@ -5,6 +5,8 @@ import * as QuestionStartView from './view/questionStartView';
 import { elements } from './view/base';
 
 
+
+
 //Submitting Questions
 
 const questionSet = new QuestionSets();
@@ -28,6 +30,10 @@ elements.submitQuestions.addEventListener("click", (e) => {
             questionSetsView.renderSetChoices(set)
         });
     }
+
+    //Clear Text Area
+    clearTextArea();
+
 });
 
 /* checkAnsBut.addEventListener("click", checkAnswer); */
@@ -39,7 +45,7 @@ elements.setChoicesArea.addEventListener("click", e => {
         let quiz = questionSet.qsets.find(el => {
             return e.target.name === el.quizName;
         });
-        const quizStart = new QuestionStart(quiz.quizName, quiz.questions, quiz.choices);
+        const quizStart = new QuestionStart(quiz.quizName, quiz.questions, quiz.answerKey, quiz.choices);
         QuestionStartView.clearQuiz();
         QuestionStartView.renderQuiz(quizStart);
     };
@@ -57,3 +63,8 @@ elements.quizContainer.addEventListener("click", e => {
 
 
 
+function clearTextArea() {
+    elements.nameArea.value = "";
+    elements.questArea.value = "";
+    elements.answerKeyArea.value = "";
+}
