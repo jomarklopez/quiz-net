@@ -1,5 +1,6 @@
 import uniqid from 'uniqid';
 
+
 export default class QuestionSets {
     constructor() {
         this.qsets = [];
@@ -9,8 +10,9 @@ export default class QuestionSets {
         questions = removeEmptyLines(questions.value.split(/\n/));
         answerKey = removeEmptyLines(answerKey.value.split(/\n/));
         quizName = quizName.value;
-
         let choices = createChoices(answerKey);
+
+
         const qset = {
             quizName: quizName,
             id: uniqid(),
@@ -52,8 +54,6 @@ function createChoices(answerKey) {
         choices.push([...answerKey])
     };
 
-    /* TODO SHUFFLE CHOICES USING FISHER-YATES SHUFFLE THEN REMOVE ELEMENTS */
-
     //Randomly remove elements until 3 are left except the right answer
     for (var i = 0; i <= choices.length - 1; i++) {
         let el = choices[i];
@@ -67,3 +67,12 @@ function createChoices(answerKey) {
 
     return choices;
 }
+
+/* TODO SHUFFLE CHOICES USING FISHER-YATES SHUFFLE THEN REMOVE ELEMENTS
+   *   Shuffle in place by starting from the last index
+   *   Randomly choose an element from a range of 0 to n
+   *   Swap then decrement n
+   *   Repeat until --n = 0;
+   */
+
+

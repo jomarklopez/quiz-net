@@ -14,25 +14,29 @@ const questionSet = new QuestionSets();
 elements.submitQuestions.addEventListener("click", (e) => {
     let duplicate = false;
     e.preventDefault();
-    questionSet.qsets.forEach(set => {
-        if (set.quizName === elements.nameArea.value) {
-            alert("Oops name is already taken!");
-            duplicate = true;
-        }
-    });
-    if (!duplicate) {
-        //Add question set to set list
-        questionSet.addQuestionSet(elements.nameArea, elements.questArea, elements.answerKeyArea);
-
-        //Update the question set choices area
-        questionSetsView.clearSetChoices();
+    if (elements.nameArea.value !== "" || elements.questArea.value !== "" || elements.answerKeyArea.value !== "") {
         questionSet.qsets.forEach(set => {
-            questionSetsView.renderSetChoices(set)
+            if (set.quizName === elements.nameArea.value) {
+                alert("Oops name is already taken!");
+                duplicate = true;
+            }
         });
-    }
+        if (!duplicate) {
+            //Add question set to set list
+            questionSet.addQuestionSet(elements.nameArea, elements.questArea, elements.answerKeyArea);
 
-    //Clear Text Area
-    clearTextArea();
+            //Update the question set choices area
+            questionSetsView.clearSetChoices();
+            questionSet.qsets.forEach(set => {
+                questionSetsView.renderSetChoices(set)
+            });
+        }
+
+        //Clear Text Area
+        clearTextArea();
+    } else {
+        alert("You need to fill in all the text areas")
+    }
 
 });
 
