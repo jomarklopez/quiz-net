@@ -1,5 +1,17 @@
 import uniqid from 'uniqid';
 
+Array.prototype.shuffleArray = function () {
+    var temp, j, n = this.length;
+    while (--n > 0) {
+        j = Math.floor(Math.random() * (n + 1));
+        temp = this[j];
+        this[j] = this[n];
+        this[n] = temp;
+    }
+    console.log(this);
+
+    return this;
+}
 
 export default class QuestionSets {
     constructor() {
@@ -11,8 +23,11 @@ export default class QuestionSets {
         answerKey = removeEmptyLines(answerKey.value.split(/\n/));
         quizName = quizName.value;
         let choices = createChoices(answerKey);
+        console.log(choices);
 
-
+        choices.forEach(el => {
+            el.shuffleArray();
+        });
         const qset = {
             quizName: quizName,
             id: uniqid(),
@@ -67,12 +82,4 @@ function createChoices(answerKey) {
 
     return choices;
 }
-
-/* TODO SHUFFLE CHOICES USING FISHER-YATES SHUFFLE THEN REMOVE ELEMENTS
-   *   Shuffle in place by starting from the last index
-   *   Randomly choose an element from a range of 0 to n
-   *   Swap then decrement n
-   *   Repeat until --n = 0;
-   */
-
 

@@ -50,6 +50,7 @@ elements.setChoicesArea.addEventListener("click", e => {
             return e.target.name === el.quizName;
         });
         const quizStart = new QuestionStart(quiz.quizName, quiz.questions, quiz.answerKey, quiz.choices);
+        quizStart.shuffleArray();
         QuestionStartView.clearQuiz();
         QuestionStartView.renderQuiz(quizStart);
     };
