@@ -5,7 +5,6 @@ export default class Quiz {
         this.choices = choices;
         this.answerKey = answerKey
     }
-
     shuffleChoices() {
         this.choices.forEach(el => {
             el.shuffleArray();
@@ -13,8 +12,9 @@ export default class Quiz {
     }
     checkAnswer(chosenAns, correctAns) {
         if (chosenAns === correctAns) {
-            console.log('correct answer!');
-
+            return true;
+        } else {
+            return false;
         }
     }
 }

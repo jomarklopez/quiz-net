@@ -13,7 +13,7 @@ function clearTextArea() {
 
 /** Global state of quiz app
  * - List of quizzes
- * 
+ * - If game has started
  * 
  */
 const state = {}
@@ -52,11 +52,16 @@ elements.setChoicesArea.addEventListener("click", e => {
             return e.target.name === el.quizName;
         });
         //Initialize the quiz
-        const quizStart = new QuestionStart(quiz.quizName, quiz.questions, quiz.answerKey, quiz.choices);
-        quizStart.shuffleChoices();
+        if (!state.quizStart) {
+            state.quizStart = new QuestionStart(quiz.quizName, quiz.questions, quiz.answerKey, quiz.choices);
+        }
+        state.quizStart.shuffleChoices();
         //Render the quiz
         QuestionStartView.clearQuiz();
-        QuestionStartView.renderQuiz(quizStart);
+        //Hide getQuestion and Display Question
+        QuestionStartView.renderQuiz(state.quizStart);
+        //Initialize progressbar
+        QuestionStartView.initProgressBar();
     };
 })
 
@@ -65,17 +70,17 @@ elements.quizContainer.addEventListener("click", e => {
         //Get chosen answer and correct answer
         const chosenAns = QuestionStartView.getUserAnswer();
         const correctAns = QuestionStartView.getQuestionAnswer();
-        console.log(chosenAns + " VS " + correctAns);
-
         //Check if answer is correct
-        QuestionStart.checkAnswer(chosenAns, correctAns);
-        //Render check mark next to correct answer if correct
+        const result = state.quizStart.checkAnswer(chosenAns.value, correctAns);
+        if (result) {
+            QuestionStartView.showCorrectAnswer(chosenAns, e.target, result);
+        } else {
+            QuestionStartView.showWrongAnswer(chosenAns, e.target, result);
+        }
 
-        //Render next question button
-
-    } else if (e.target.matches(".prevBut, .prevBut *")) {
-        QuestionStartView.prevQuestion();
-    } else if (e.target.matches(".nextBut, .nextBut *")) {
+    } else if (e.target.innerText === "Next Question") {
+        QuestionStartView.nextQuestion();
+    } else if (e.target.innerText === "Skip") {
         QuestionStartView.nextQuestion();
     }
 });

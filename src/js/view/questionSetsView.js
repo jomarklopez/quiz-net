@@ -13,7 +13,3 @@ export const clearSetChoices = () => {
         setBut.removeChild(setBut.firstChild);
     };
 };
-
-export const startQuiz = (quizName) => {
-
-};

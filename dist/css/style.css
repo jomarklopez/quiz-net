@@ -21,27 +21,60 @@ header {
 
 main {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     margin: 2vw;
 }
 
-.getQuestions {
+.get_questions-container {
     display: flex;
 }
 
-.getQuestions form {
+.get_questions-container form {
     display: flex;
     flex-direction: column;
 }
 
-.getQuestions form button {
+.get_questions-container form button {
     padding: 10px;
 }
 
-.quiz-container {}
+.quiz-container .checkAnsBut {
+    color: white;
+    background-color: #4CAF50;
+    font-size: 1rem;
+    pointer: cursor;
+}
+
+.quiz-container .checkAnsBut:hover {
+    background-color: rgb(57, 128, 59);
+}
+
+.quiz-container .checkAnsBut span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.4s;
+}
+
+.quiz-container .checkAnsBut span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+
+.quiz-container .checkAnsBut:hover span {
+    padding-right: 25px;
+}
+
+.quiz-container .checkAnsBut:hover span:after {
+    opacity: 1;
+    right: 0;
+}
 
 .displayQuestions {
-    width: 40vw;
     display: flex;
     align-self: center;
     flex-direction: column;
@@ -54,9 +87,73 @@ main {
         sans-serif;
 }
 
+.displayQuestions p {
+    font-size: 1rem;
+}
+
+.progressBar-container {
+    margin: 20px 0;
+}
+
+.progressBar {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+}
+
+.steps {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+}
+
+.step {
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    border: 2px solid #ACACA6;
+    border-radius: 50%;
+    transition: background 1s;
+}
+
+.step.selected {
+    border: 2px solid green;
+}
+
+.step.correct {
+    border: 2px solid green;
+    background: green;
+}
+
+.step.wrong {
+    border: 2px solid rgb(128, 0, 0);
+    background: rgb(128, 0, 0);
+}
+
+.progress {
+    position: absolute;
+    width: 100%;
+    height: 50%;
+    border-bottom: 2px solid #ACACA6;
+    z-index: -1;
+}
+
+.percent {
+    position: absolute;
+    width: 0;
+    height: 100%;
+    border-bottom: 2px solid green;
+    z-index: 1;
+    transition: width 1s;
+}
+
 .question-container {
     margin: 10px;
+}
 
+.question-container p {
+    font-size: 1.3rem;
 }
 
 .choices-container {
@@ -68,7 +165,17 @@ main {
     margin: 5px auto;
 }
 
-.set_choices-container {
+.choices-container .correctAnsIcon {
+    display: inline;
+    color: #00c700;
+}
+
+.choices-container .wrongAnsIcon {
+    display: inline;
+    color: #c70000;
+}
+
+.choices-container .set_choices-container {
     width: 30vw;
     margin: 10px 10px;
     padding: 20px;
@@ -86,4 +193,35 @@ main {
     border-radius: 5px;
     padding: 10px;
     outline: none;
+}
+
+.shakeElement {
+    animation: shake 0.82s cubic-bezier(.36, .07, .19, .97) both;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+@keyframes shake {
+
+    10%,
+    90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%,
+    80% {
+        transform: translate3d(2px, 0, 0);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+
+    40%,
+    60% {
+        transform: translate3d(4px, 0, 0);
+    }
 }
