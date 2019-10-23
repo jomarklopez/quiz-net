@@ -18,15 +18,15 @@ export const renderQuiz = (quiz) => {
             <div class="choices-container">
                 <ul>
                     <li>
-                        <input id="choice1" type="radio" name="radios" value="all">
+                        <input id="choice1" type="radio" name="userAnswer" value="${quiz.choices[curQuestionNum - 1][0]}">
                         <label for="choice1">${quiz.choices[curQuestionNum - 1][0]}</label>
                     </li>
                     <li>
-                        <input id="choice2" type="radio" name="radios" value="all">
+                        <input id="choice2" type="radio" name="userAnswer" value="${quiz.choices[curQuestionNum - 1][0]}">
                         <label for="choice2">${quiz.choices[curQuestionNum - 1][1]}</label>
                     </li>
                     <li>
-                        <input id="choice3" type="radio" name="radios" value="all">
+                        <input id="choice3" type="radio" name="userAnswer" value="${quiz.choices[curQuestionNum - 1][0]}">
                         <label for="choice3">${quiz.choices[curQuestionNum - 1][2]}</label>
                     </li>
                 </ul>
@@ -60,4 +60,18 @@ export const clearQuiz = () => {
     while (display.hasChildNodes()) {
         display.removeChild(display.firstChild);
     };
+}
+
+export const getUserAnswer = () => {
+    for (let i = 0; i < elements.inputChoices.length; i++) {
+        if (elements.inputChoices[i].type = "radio") {
+            if (elements.inputChoices[i].checked) {
+                return elements.inputChoices[i].value;
+            }
+        }
+    }
+}
+
+export const getQuestionAnswer = () => {
+    return TheQuiz.answerKey[curQuestionNum - 1];
 }

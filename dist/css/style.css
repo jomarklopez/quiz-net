@@ -32,10 +32,7 @@ main {
 .getQuestions form {
     display: flex;
     flex-direction: column;
-
 }
-
-.getQuestions form textarea {}
 
 .getQuestions form button {
     padding: 10px;

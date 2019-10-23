@@ -1,18 +1,5 @@
 import uniqid from 'uniqid';
 
-Array.prototype.shuffleArray = function () {
-    var temp, j, n = this.length;
-    while (--n > 0) {
-        j = Math.floor(Math.random() * (n + 1));
-        temp = this[j];
-        this[j] = this[n];
-        this[n] = temp;
-    }
-    console.log(this);
-
-    return this;
-}
-
 export default class QuestionSets {
     constructor() {
         this.qsets = [];
@@ -23,11 +10,9 @@ export default class QuestionSets {
         answerKey = removeEmptyLines(answerKey.value.split(/\n/));
         quizName = quizName.value;
         let choices = createChoices(answerKey);
-        console.log(choices);
 
-        choices.forEach(el => {
-            el.shuffleArray();
-        });
+
+
         const qset = {
             quizName: quizName,
             id: uniqid(),
@@ -37,7 +22,6 @@ export default class QuestionSets {
         }
 
         this.qsets.push(qset);
-        console.log(qset);
         return qset;
     };
 
@@ -68,6 +52,8 @@ function createChoices(answerKey) {
         const element = answerKey[index];
         choices.push([...answerKey])
     };
+
+    /* TODO SHUFFLE CHOICES USING FISHER-YATES SHUFFLE THEN REMOVE ELEMENTS */
 
     //Randomly remove elements until 3 are left except the right answer
     for (var i = 0; i <= choices.length - 1; i++) {

@@ -12,6 +12,7 @@ export const elements = {
     displayQuestions: document.querySelector(".displayQuestions"),
     questionNumber: document.querySelector(".questionNumber-container"),
     questionContainer: document.querySelector(".question-container"),
-    choicesContainerL: document.querySelector(".choices-container")
+    choicesContainerL: document.querySelector(".choices-container"),
+    inputChoices: document.getElementsByTagName('input')
 
 }
