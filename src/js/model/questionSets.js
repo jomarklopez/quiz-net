@@ -1,17 +1,13 @@
-import uniqid from 'uniqid';
-
 export default class QuestionSets {
     constructor() {
         this.qsets = [];
     }
     addQuestionSet(quizName, questions, answerKey) {
-        questions = removeEmptyLines(questions.value.split(/\n/));
-        answerKey = removeEmptyLines(answerKey.value.split(/\n/));
-        quizName = quizName.value;
+        questions = removeEmptyLines(questions.split(/\n/));
+        answerKey = removeEmptyLines(answerKey.split(/\n/));
         let choices = createChoices(answerKey);
         const qset = {
             quizName: quizName,
-            id: uniqid(),
             questions: questions,
             answerKey: answerKey,
             choices: choices

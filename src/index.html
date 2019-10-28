@@ -12,6 +12,7 @@
 <body>
     <header></header>
     <main>
+        <!--TODO TYPE RACER KIND OF QUIZ-->
         <div class="quiz-container">
             <!-- <div class="displayQuestions">
                 <div class="questionNumber-container"> Question 1 of 5
@@ -43,35 +44,41 @@
             </div> -->
 
         </div>
+        <div class="set_choices-container">
+            <h1>Select Quiz!</h1>
+            <br>
+            <p id="noQuiz">No Quizzes yet, Add some now.</p>
+            <div class="setButtonContainers">
+                <div class="questSet-container">
+                </div>
+                <button class="addQuizBut">+</button>
+            </div>
+        </div>
         <div class="get_questions-container">
-            <form>
-                <textarea id="setNameArea" rows="1" cols="100" placeholder="Put your quiz name here!"
-                    required>Spinal Cord</textarea>
-                <textarea id="questionArea" rows="20" cols="100" placeholder="Put your quiz questions here!" required>
-White matter column located between posterolateral sulcus and posterior median sulcus
+            <div class="wrapper">
+                <form>
+                    <textarea id="questionArea" rows="20" cols="100" placeholder="Put your quiz questions here! 
+Remember to press enter after each question and to also put the answer at the box to the right." required>White matter column located between posterolateral sulcus and posterior median sulcus
 2nd order neuron of lateral spinothalamic tract
 Pia derivative that anchors the spinal cord laterally to the laminae of the adjacent vertebrae
 Begins superiorly at formaen magnum and terminates inferiorly at the level of 3rd lumbar vertebra
-Composed of CNS nerve fibers sharing a common origin, destination and function
-</textarea>
-                <textarea id="answerKeyArea" rows="20" cols="100" placeholder="Put your quiz choices here!" required>
-Posterior/Dorsal Column
+Composed of CNS nerve fibers sharing a common origin, destination and funtion</textarea>
+                    <textarea id="answerKeyArea" rows="20" cols="100" placeholder="Put your quiz answers here!"
+                        required>Posterior/Dorsal Column
 Substantia gelatinosa
 Denticulate ligament
 Spinal cord
 Fasciculus
 </textarea>
+
+                </form>
+                <input type="text" id="setNameArea" maxlength="50" size="40" placeholder="Put your quiz name here!"
+                    required></textarea>
                 <button id="submit">Submit</button>
-            </form>
-        </div>
-
-        <div class="set_choices-container">
-            <h1>Select Quiz!</h1>
-            <br>
-            <div class="setButtonContainers">
-                <p>No Quizzes yet, Add some now.</p>
             </div>
-
+        </div>
+        <div class="finishedQuiz_container">
+            <button class="finishBut button"><span>Finish</span></button>
         </div>
 
     </main>

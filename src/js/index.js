@@ -28,8 +28,23 @@ const controlQuestionSets = () => {
             }
         });
         if (!duplicate) {
+            //Get texts
+            let name = elements.nameArea.value;
+            name = name.toLowerCase();
+            name = name.split(/\s/);
+            name.forEach((word, index, array) => {
+                array[index] = word[0].toUpperCase() +
+                    word.slice(1);
+            });
+            name = name.join(" ");
+            let questions = elements.questArea.value;
+            questions = questions.replace(/-/g, ``);
+            questions = questions.replace(/^\s*[\r\n]/gm, "");
+            let answers = elements.answerKeyArea.value;
+            answers = answers.replace(/-/g, ``);
+            answers = answers.replace(/^\s*[\r\n]/gm, "");
             //Add question set to set list
-            state.questionSet.addQuestionSet(elements.nameArea, elements.questArea, elements.answerKeyArea);
+            state.questionSet.addQuestionSet(name, questions, answers);
             //Render the question set choices area
             questionSetsView.clearSetChoices();
             state.questionSet.qsets.forEach(set => {
@@ -40,21 +55,61 @@ const controlQuestionSets = () => {
         clearTextArea();
     }
 }
+//Listen to add quiz button
+elements.addQuizBut.addEventListener("click", () => {
+    elements.getQuestionsArea.style.display = "block";
+});
+
+//Rendering the textarea question dashes
+let curVal;
+elements.questArea.addEventListener("keyup", e => {
+    if (e.isComposing || e.keyCode === 13) {
+        curVal = elements.questArea.value;
+        curVal = insertDivider(curVal);
+        elements.questArea.value = curVal;
+    };
+});
+
+elements.answerKeyArea.addEventListener("keyup", e => {
+    if (e.isComposing || e.keyCode === 13) {
+        curVal = elements.answerKeyArea.value;
+        curVal = insertDivider(curVal);
+        elements.answerKeyArea.value = curVal;
+
+    };
+});
+
+const insertDivider = (curVal) => {
+    curVal = curVal.replace(/-/g, ``);
+    curVal = curVal.replace(/^\s*[\r\n]/gm, "");
+    let dashes = "";
+    for (let index = 0; index < elements.questArea.cols; index++) {
+        dashes += "-";
+    };
+    curVal = curVal.replace(/\n/g, `\n${dashes}\n`);
+    return curVal;
+};
+
 //Submitting Questions
 elements.submitQuestions.addEventListener("click", (e) => {
     e.preventDefault();
     controlQuestionSets();
+    if (document.getElementById("noQuiz")) {
+        elements.setButtonsContainer.parentNode.removeChild(document.getElementById("noQuiz"));
+    }
+    elements.getQuestionsArea.style.display = "none";
 });
+
 elements.setChoicesArea.addEventListener("click", e => {
-    if (e.target.matches(".questSet, .questSet *")) {
+    if (e.target.matches(".setCard, .setCard *")) {
         //Get chosen quiz from quiz list
         let quiz = state.questionSet.qsets.find(el => {
-            return e.target.name === el.quizName;
+            return e.target.id === el.quizName;
         });
         //Initialize the quiz
         if (!state.quizStart) {
             state.quizStart = new QuestionStart(quiz.quizName, quiz.questions, quiz.answerKey, quiz.choices);
-        }
+        };
         state.quizStart.shuffleChoices();
         //Render the quiz
         QuestionStartView.clearQuiz();
@@ -63,7 +118,7 @@ elements.setChoicesArea.addEventListener("click", e => {
         //Initialize progressbar
         QuestionStartView.initProgressBar();
     };
-})
+});
 
 elements.quizContainer.addEventListener("click", e => {
     if (e.target.innerText === "Check Answer!") {
@@ -77,11 +132,19 @@ elements.quizContainer.addEventListener("click", e => {
         } else {
             QuestionStartView.showWrongAnswer(chosenAns, e.target, result);
         }
-
     } else if (e.target.innerText === "Next Question") {
         QuestionStartView.nextQuestion();
-    } else if (e.target.innerText === "Skip") {
-        QuestionStartView.nextQuestion();
+    } else if (e.target.innerText === "Go Back") {
+        QuestionStartView.returnHome();
+    } else if (e.target.innerText === "Finish") {
+        QuestionStartView.renderFinish();
+    }
+});
+
+elements.finishedContainer.addEventListener("click", e => {
+    if (e.target.innerText === "Finish") {
+        /**TODO INSERT SUMMARY OF ANSWERS */
+        QuestionStartView.renderFinish();
     }
 });
 

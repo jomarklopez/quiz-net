@@ -1,13 +1,13 @@
 import { elements } from './base';
-let questionIndex = 0;
-let curQuestionNum = questionIndex + 1;
-let TheQuiz;
+let curQuestionNum = 1;
+let TheQuiz, score = 0;
 export const renderQuiz = (quiz) => {
-    elements.getQuestionsArea.style.display = "none";
+    elements.quizContainer.style.display = "block";
     elements.setChoicesArea.style.display = "none";
     TheQuiz = quiz;
     const markup = `
     <div class="displayQuestions">
+            <button class="backBut button"><span>Go Back</span></button>
             <div class="questionNumber-container">
                 <h4>Question ${curQuestionNum} of ${TheQuiz.questions.length}</h4>    
             </div>
@@ -41,8 +41,7 @@ export const renderQuiz = (quiz) => {
                         <label for="choice3">${quiz.choices[curQuestionNum - 1][2]}</label>
                     </li>
                 </ul>
-            </div> 
-        <button class="skipBut button">Skip</button>
+            </div>
         <button class="checkAnsBut button">Check Answer!</button>
     </div>
     `
@@ -72,9 +71,9 @@ export const initProgressBar = () => {
         });
     });
 }
-
+/**TODO: FIX THE PROGRESS BAR TO WORK EVEN WITH LARGE NUMBERS */
 export const progress = (stepNum) => {
-    let p = stepNum * 25;
+    let p = stepNum + (100 * (stepNum / TheQuiz.questions.length));
     document.getElementsByClassName('percent')[0].style.width = `${p}%`;
 
     steps.forEach((e) => {
@@ -144,6 +143,7 @@ export const getQuestionAnswer = () => {
 }
 
 export const showCorrectAnswer = (userAns, checkAnsButton, result) => {
+    score += 1;
     const markup = `
     <p class="correctAnsIcon">&#10004;</p>
     `
@@ -162,8 +162,13 @@ export const showWrongAnswer = (userAns, checkAnsButton, result) => {
     `
     userAns.parentNode.insertAdjacentHTML("beforeend", markup);
     checkAnsButton.classList.add('shakeElement');
-    removeShakeButton(checkAnsButton)
+    removeShakeButton(checkAnsButton);
     renderSteps(result);
+    if (curQuestionNum === TheQuiz.questions.length) {
+        checkAnsButton.innerHTML = "<span>Finish</span>";
+    } else {
+        checkAnsButton.innerHTML = "<span>Next Question</span>";
+    }
 }
 
 const renderSteps = (result) => {
@@ -186,4 +191,20 @@ const removeShakeButton = (checkAnsButton) => {
         checkAnsButton.removeEventListener('animationend', animationEndCallback);
         checkAnsButton.classList.remove('shakeElement');
     }
+}
+
+export const returnHome = () => {
+    elements.setChoicesArea.style.display = "block";
+    elements.quizContainer.style.display = "none";
+    curQuestionNum = 1;
+}
+
+export const renderFinish = () => {
+    elements.finishedContainer.style.display = "block";
+    elements.quizContainer.style.display = "none";
+    curQuestionNum = 1;
+    const markup = `
+    <h3>You got ${score} out of ${TheQuiz.questions.length}</h3>
+    `
+    elements.finishedContainer.insertAdjacentHTML("afterbegin", markup);
 }

@@ -2,13 +2,17 @@ import { elements } from './base'
 
 export const renderSetChoices = (set) => {
     const markup = `
-        <button name="${set.quizName}" class="questSet button">${set.quizName}</button>
+        <div class="setCard" id="${set.quizName}">
+            <p class="setCard_title">${set.quizName}</p>
+            <div class="cardOptions"></div>
+
+        </div>
     `;
-    elements.setButtons.insertAdjacentHTML("beforeend", markup);
+    elements.questSetContainer.insertAdjacentHTML("beforeend", markup);
 };
 
 export const clearSetChoices = () => {
-    const setBut = elements.setButtons;
+    const setBut = elements.questSetContainer;
     while (setBut.hasChildNodes()) {
         setBut.removeChild(setBut.firstChild);
     };
