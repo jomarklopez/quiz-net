@@ -13,6 +13,7 @@ export default class QuestionSets {
             choices: choices
         }
         this.qsets.push(qset);
+        //Persist data in local storage
         return qset;
     };
     deleteQuestionSet(id) {
@@ -20,6 +21,7 @@ export default class QuestionSets {
             el.id === id;
         })
         this.qsets.splice(index, 1);
+        //Persist data in local storage
     };
 };
 

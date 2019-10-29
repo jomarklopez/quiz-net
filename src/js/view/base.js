@@ -11,6 +11,8 @@ export const elements = {
     setChoicesArea: document.querySelector(".set_choices-container"),
     setButtonsContainer: document.querySelector(".setButtonContainers"),
     questSetContainer: document.querySelector(".questSet-container"),
+    setCardOptions: document.querySelector(".setCard_options"),
+    setCardDropdown: document.querySelector(".options_dropdown"),
     quizContainer: document.querySelector(".quiz-container"),
     progressSteps: document.getElementsByClassName('step'),
     displayQuestions: document.querySelector(".displayQuestions"),

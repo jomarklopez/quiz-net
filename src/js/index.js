@@ -100,8 +100,21 @@ elements.submitQuestions.addEventListener("click", (e) => {
     elements.getQuestionsArea.style.display = "none";
 });
 
+//Set cards selector
 elements.setChoicesArea.addEventListener("click", e => {
-    if (e.target.matches(".setCard, .setCard *")) {
+    if (e.target.text == "Rename") {
+        console.log("rename was clicked");
+    } else if (e.target.text == "Edit") {
+        console.log("Edit was clicked");
+    } else if (e.target.text == "Delete") {
+        console.log("delete was clicked");
+    } else if (e.target.matches(".setCard_options, .setCard_options *")) {
+        e.target.parentNode.lastChild.classList.toggle("dropdownDisplay");
+        if (e.target.parentNode.parentNode.nextSibling !== null) {
+            e.target.parentNode.parentNode.nextSibling.classList.toggle("giveSpaceDropdown");
+        }
+
+    } else if (e.target.matches(".setCard, .setCard *")) {
         //Get chosen quiz from quiz list
         let quiz = state.questionSet.qsets.find(el => {
             return e.target.id === el.quizName;
@@ -117,9 +130,10 @@ elements.setChoicesArea.addEventListener("click", e => {
         QuestionStartView.renderQuiz(state.quizStart);
         //Initialize progressbar
         QuestionStartView.initProgressBar();
-    };
-});
+    }
+})
 
+//Quiz checking
 elements.quizContainer.addEventListener("click", e => {
     if (e.target.innerText === "Check Answer!") {
         //Get chosen answer and correct answer
@@ -147,6 +161,5 @@ elements.finishedContainer.addEventListener("click", e => {
         QuestionStartView.renderFinish();
     }
 });
-
 
 
