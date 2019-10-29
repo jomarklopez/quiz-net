@@ -103,11 +103,17 @@ p {
 }
 
 .setCard_title {
+    margin-top: 10px;
     width: 100%;
     color: black;
     font-weight: 300;
     float: left;
     text-align: center;
+}
+
+.setCard_title:focus {
+    background-color: white;
+    outline: none;
 }
 
 .setCard_options {
@@ -118,7 +124,7 @@ p {
 
 .setCard_options span {
     font-size: 3em;
-    margin: 5px;
+    padding: 5px;
 }
 
 .setCard_options:hover {
@@ -126,7 +132,7 @@ p {
 }
 
 .options_dropdown {
-    display: none;
+    display: block;
     position: absolute;
     left: 166px;
     top: 0px;
@@ -134,11 +140,14 @@ p {
     background-color: #f9f9f9;
     min-width: 7vw;
     box-shadow: 3px 6px 4px 0px rgba(0, 0, 0, 0.2);
-    z-index: 10;
+    transition: 0.3s;
+    z-index: -1;
+    opacity: 0;
 }
 
 .dropdownDisplay {
-    display: block;
+    opacity: 1;
+    z-index: 1;
 }
 
 .options_dropdown a {

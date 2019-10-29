@@ -11,12 +11,19 @@ function clearTextArea() {
     elements.answerKeyArea.value = "";
 }
 
+function renderSetChoices() {
+    questionSetsView.clearSetChoices();
+    state.questionSet.qsets.forEach(set => {
+        questionSetsView.renderSetChoices(set)
+    });
+}
 /** Global state of quiz app
  * - List of quizzes
  * - If game has started
  * 
  */
 const state = {}
+window.state = state;
 const controlQuestionSets = () => {
     if (!state.questionSet) { state.questionSet = new QuestionSets(); }
     let duplicate = false;
@@ -46,10 +53,7 @@ const controlQuestionSets = () => {
             //Add question set to set list
             state.questionSet.addQuestionSet(name, questions, answers);
             //Render the question set choices area
-            questionSetsView.clearSetChoices();
-            state.questionSet.qsets.forEach(set => {
-                questionSetsView.renderSetChoices(set)
-            });
+            renderSetChoices();
         }
         //Clear Text Area
         clearTextArea();
@@ -101,28 +105,36 @@ elements.submitQuestions.addEventListener("click", (e) => {
 });
 
 //Set cards selector
-elements.setChoicesArea.addEventListener("click", e => {
-    if (e.target.text == "Rename") {
-        console.log("rename was clicked");
-    } else if (e.target.text == "Edit") {
-        console.log("Edit was clicked");
+elements.questSetContainer.addEventListener("click", e => {
+    //Get chosen quiz from quiz list
+    let quiz = state.questionSet.qsets.find(el => {
+        return e.target.id === el.quizName;
+    });
+
+    const cardID = quiz.id;
+
+    if (e.target.text == "Edit") {
     } else if (e.target.text == "Delete") {
-        console.log("delete was clicked");
+        if (e.target.parentNode.parentNode.parentNode.nextSibling !== null) {
+            e.target.parentNode.parentNode.parentNode.nextSibling.classList.toggle("giveSpaceDropdown");
+        }
+        state.questionSet.deleteQuestionSet(cardID);
+        questionSetsView.deleteSetCard(cardID);
+        console.log();
+        if (state.questionSet.qsets.length === 0) {
+            questionSetsView.insertNoQuizSets();
+        }
     } else if (e.target.matches(".setCard_options, .setCard_options *")) {
         e.target.parentNode.lastChild.classList.toggle("dropdownDisplay");
         if (e.target.parentNode.parentNode.nextSibling !== null) {
             e.target.parentNode.parentNode.nextSibling.classList.toggle("giveSpaceDropdown");
         }
-
     } else if (e.target.matches(".setCard, .setCard *")) {
-        //Get chosen quiz from quiz list
-        let quiz = state.questionSet.qsets.find(el => {
-            return e.target.id === el.quizName;
-        });
         //Initialize the quiz
         if (!state.quizStart) {
             state.quizStart = new QuestionStart(quiz.quizName, quiz.questions, quiz.answerKey, quiz.choices);
         };
+
         state.quizStart.shuffleChoices();
         //Render the quiz
         QuestionStartView.clearQuiz();
@@ -149,8 +161,10 @@ elements.quizContainer.addEventListener("click", e => {
     } else if (e.target.innerText === "Next Question") {
         QuestionStartView.nextQuestion();
     } else if (e.target.innerText === "Go Back") {
+        state.quizStart = undefined;
         QuestionStartView.returnHome();
     } else if (e.target.innerText === "Finish") {
+        state.quizStart = undefined;
         QuestionStartView.renderFinish();
     }
 });
@@ -162,4 +176,14 @@ elements.finishedContainer.addEventListener("click", e => {
     }
 });
 
+//Restore quiz sets on page load
 
+window.addEventListener('load', () => {
+    let isEmptyStorage;
+    state.questionSet = new QuestionSets;
+    state.questionSet.readStorage();
+    if (state.questionSet.qsets.length === 0) {
+        questionSetsView.insertNoQuizSets();
+    }
+    renderSetChoices();
+});
