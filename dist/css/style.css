@@ -92,8 +92,8 @@ p {
     width: 13vw;
     margin: 1vw;
     background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: -10px 2px 7px -1px rgba(0, 0, 0, 0.454);
+    border-radius: 10px 0px 10px 10px;
+    box-shadow: -6px 3px 8px -1px rgba(0, 0, 0, 0.454);
     justify-content: center;
     /*   margin-left: -50px; */
     transition: 0.4s ease-out;
@@ -134,12 +134,11 @@ p {
 .options_dropdown {
     display: block;
     position: absolute;
-    left: 166px;
+    left: 186px;
     top: 0px;
     color: black;
     background-color: #f9f9f9;
     min-width: 7vw;
-    box-shadow: 3px 6px 4px 0px rgba(0, 0, 0, 0.2);
     transition: 0.3s;
     z-index: -1;
     opacity: 0;
