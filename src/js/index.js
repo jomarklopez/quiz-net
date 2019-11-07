@@ -120,7 +120,6 @@ elements.questSetContainer.addEventListener("click", e => {
         }
         state.questionSet.deleteQuestionSet(cardID);
         questionSetsView.deleteSetCard(cardID);
-        console.log();
         if (state.questionSet.qsets.length === 0) {
             questionSetsView.insertNoQuizSets();
         }
@@ -141,7 +140,7 @@ elements.questSetContainer.addEventListener("click", e => {
         //Hide getQuestion and Display Question
         QuestionStartView.renderQuiz(state.quizStart);
         //Initialize progressbar
-        QuestionStartView.initProgressBar();
+        QuestionStartView.initProgressSteps();
     }
 })
 
@@ -160,26 +159,19 @@ elements.quizContainer.addEventListener("click", e => {
         }
     } else if (e.target.innerText === "Next Question") {
         QuestionStartView.nextQuestion();
-    } else if (e.target.innerText === "Go Back") {
+    } else if (e.target.innerText === "Go Back" || e.target.id === "finishQuiz") {
         state.quizStart = undefined;
         QuestionStartView.returnHome();
     } else if (e.target.innerText === "Finish") {
         state.quizStart = undefined;
         QuestionStartView.renderFinish();
+        /**RESTART QUIZ FUNCTION*/
+    } else if (e.target.innerText === "Restart") {
+        QuestionStartView.restartQuiz();
     }
 });
-
-elements.finishedContainer.addEventListener("click", e => {
-    if (e.target.innerText === "Finish") {
-        /**TODO INSERT SUMMARY OF ANSWERS */
-        QuestionStartView.renderFinish();
-    }
-});
-
 //Restore quiz sets on page load
-
 window.addEventListener('load', () => {
-    let isEmptyStorage;
     state.questionSet = new QuestionSets;
     state.questionSet.readStorage();
     if (state.questionSet.qsets.length === 0) {

@@ -62,7 +62,7 @@ const countSteps = (num) => {
 }
 
 let steps = [];
-export const initProgressBar = () => {
+export const initProgressSteps = () => {
     Array.prototype.forEach.call(elements.progressSteps, (e) => {
         steps.push(e);
         e.addEventListener('click', (x) => {
@@ -200,11 +200,19 @@ export const returnHome = () => {
 }
 
 export const renderFinish = () => {
-    elements.finishedContainer.style.display = "block";
-    elements.quizContainer.style.display = "none";
+    clearQuiz();
     curQuestionNum = 1;
     const markup = `
+    <div class="finishedQuiz_container">
     <h3>You got ${score} out of ${TheQuiz.questions.length}</h3>
+    <button class="finishBut button" id="finishQuiz"><span>Finish!</span></button>
+    </div>
     `
-    elements.finishedContainer.insertAdjacentHTML("afterbegin", markup);
+    elements.quizContainer.insertAdjacentHTML("afterbegin", markup);
+}
+
+export const restartQuiz = () => {
+    clearQuiz();
+    curQuestionNum = 1;
+    renderQuiz();
 }

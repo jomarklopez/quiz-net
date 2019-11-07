@@ -19,6 +19,5 @@ export const elements = {
     questionNumber: document.querySelector(".questionNumber-container"),
     questionContainer: document.querySelector(".question-container"),
     choicesContainer: document.querySelector(".choices-container"),
-    inputChoices: document.getElementsByTagName('input'),
-    finishedContainer: document.querySelector(".finishedQuiz_container")
+    inputChoices: document.getElementsByTagName('input')
 }

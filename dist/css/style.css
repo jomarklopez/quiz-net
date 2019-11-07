@@ -428,7 +428,7 @@ p {
 }
 
 .finishedQuiz_container {
-    display: none;
+    display: block;
     width: 50%;
     height: 30vw;
     padding: 20px;
