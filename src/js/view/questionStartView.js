@@ -77,7 +77,7 @@ export const progress = (stepNum) => {
     document.getElementsByClassName('percent')[0].style.width = `${p}%`;
 
     steps.forEach((e) => {
-        if (e.id == stepNum) {
+        if (e.id === stepNum) {
             e.classList.add('selected');
         } else {
             e.classList.remove('selected');
@@ -205,7 +205,7 @@ export const renderFinish = () => {
     const markup = `
     <div class="finishedQuiz_container">
     <h3>You got ${score} out of ${TheQuiz.questions.length}</h3>
-    <button class="finishBut button" id="finishQuiz"><span>Finish!</span></button>
+    <button class="finishBut button" id="finishQuiz">Finish!</button>
     </div>
     `
     elements.quizContainer.insertAdjacentHTML("afterbegin", markup);

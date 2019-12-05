@@ -113,8 +113,8 @@ elements.questSetContainer.addEventListener("click", e => {
 
     const cardID = quiz.id;
 
-    if (e.target.text == "Edit") {
-    } else if (e.target.text == "Delete") {
+    if (e.target.text === "Edit") {
+    } else if (e.target.text === "Delete") {
         if (e.target.parentNode.parentNode.parentNode.nextSibling !== null) {
             e.target.parentNode.parentNode.parentNode.nextSibling.classList.toggle("giveSpaceDropdown");
         }
@@ -146,6 +146,7 @@ elements.questSetContainer.addEventListener("click", e => {
 
 //Quiz checking
 elements.quizContainer.addEventListener("click", e => {
+    console.log(e.target.id)
     if (e.target.innerText === "Check Answer!") {
         //Get chosen answer and correct answer
         const chosenAns = QuestionStartView.getUserAnswer();
@@ -166,8 +167,6 @@ elements.quizContainer.addEventListener("click", e => {
         state.quizStart = undefined;
         QuestionStartView.renderFinish();
         /**RESTART QUIZ FUNCTION*/
-    } else if (e.target.innerText === "Restart") {
-        QuestionStartView.restartQuiz();
     }
 });
 //Restore quiz sets on page load
