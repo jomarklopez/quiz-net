@@ -5,22 +5,31 @@ export default class QuestionSets {
         this.qsets = [];
     }
 
-    addQuestionSet(quizName, questions, answerKey) {
-        questions = removeEmptyLines(questions.split(/\n/));
+    addQuestionSet(quizName, questionsInput, answerKey) {
+        questionsInput = removeEmptyLines(questionsInput.split(/\n/));
         answerKey = removeEmptyLines(answerKey.split(/\n/));
+        var questions = [];
+        for (let index = 0; index < questionsInput.length; index++) {
+            let question = [questionsInput[index], answerKey[index]];
+            questions.push(question);
+        }
         let choices = createChoices(answerKey);
+
         const qset = {
             id: uniqueid(),
-            quizName: quizName,
-            questions: questions,
-            answerKey: answerKey,
-            choices: choices
+            quizName,
+            questions,
+            answerKey,
+            choices
         }
         this.qsets.push(qset);
-        console.log(this.qsets);
         //Persist data in local storage
         this.persistData();
         return qset;
+    }
+
+    generateQuestionObject() {
+
     }
 
     deleteQuestionSet(id) {
@@ -61,7 +70,6 @@ function removeEmptyLines(array) {
 function createChoices(answerKey) {
     const choices = [];
     for (let index = 0; index < answerKey.length; index++) {
-        const element = answerKey[index];
         choices.push([...answerKey])
     }
     //Randomly remove elements until 3 are left except the right answer

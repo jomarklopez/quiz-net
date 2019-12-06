@@ -22,7 +22,7 @@ export const renderQuiz = (quiz) => {
                 </div>
             </div>
             <div class="question-container">
-                <p class="question">${quiz.questions[curQuestionNum - 1]}</p>
+                <p class="question">${quiz.questions[curQuestionNum - 1][0]}</p>
             </div>
 
             <p>Choose the right answer:</p>
@@ -100,7 +100,7 @@ export const nextQuestion = (qNum) => {
     if (curQuestionNum !== TheQuiz.questions.length) {
         curQuestionNum++;
         document.querySelector(".questionNumber-container").innerHTML = `<h4>Question ${curQuestionNum} of ${TheQuiz.questions.length}</h4>`;
-        document.querySelector(".question-container").innerHTML = `<p class="question">${TheQuiz.questions[curQuestionNum - 1]}</p>`;
+        document.querySelector(".question-container").innerHTML = `<p class="question">${TheQuiz.questions[curQuestionNum - 1][0]}</p>`;
         document.querySelector(".choices-container").innerHTML = `
         <ul>
             <li>
@@ -139,7 +139,7 @@ export const getUserAnswer = () => {
 }
 
 export const getQuestionAnswer = () => {
-    return TheQuiz.answerKey[curQuestionNum - 1];
+    return TheQuiz.questions[curQuestionNum - 1][1];
 }
 
 export const showCorrectAnswer = (userAns, checkAnsButton, result) => {

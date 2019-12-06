@@ -131,10 +131,10 @@ elements.questSetContainer.addEventListener("click", e => {
     } else if (e.target.matches(".setCard, .setCard *")) {
         //Initialize the quiz
         if (!state.quizStart) {
-            state.quizStart = new QuestionStart(quiz.quizName, quiz.questions, quiz.answerKey, quiz.choices);
+            state.quizStart = new QuestionStart(quiz.quizName, quiz.questions, quiz.choices);
         };
 
-        state.quizStart.shuffleChoices();
+        state.quizStart.shuffleQuestionsAndChoices();
         //Render the quiz
         QuestionStartView.clearQuiz();
         //Hide getQuestion and Display Question

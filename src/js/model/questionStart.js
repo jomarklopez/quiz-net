@@ -1,15 +1,17 @@
 export default class Quiz {
-    constructor(name, questions, answerKey, choices) {
+    constructor(name, questions, choices) {
         this.name = name;
         this.questions = questions;
         this.choices = choices;
-        this.answerKey = answerKey
     }
-    shuffleChoices() {
+
+    shuffleQuestionsAndChoices() {
         this.choices.forEach(el => {
             el.shuffleArray();
         });
+        this.questions.shuffleArray();
     }
+
     checkAnswer(chosenAns, correctAns) {
         if (chosenAns === correctAns) {
             return true;
