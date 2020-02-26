@@ -1,5 +1,5 @@
 # quiz-net
- A simple quiz maker
+ A simple quiz maker following mvc architecture with vanilla javascript
 
 ## To visit the demo with Github Pages:
 https://jomarklopez.github.io/quiz-net/dist/
